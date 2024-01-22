@@ -10,7 +10,7 @@
 	padding: 0;
 	box-sizing: border-box;
 	user-select: text;
-	transition-duration: 0.2s;
+	transition-duration: 0.1s;
 	transition-property: none;
 	user-select: none;
 	list-style: none;
@@ -56,6 +56,7 @@ a:visited {
 	text-decoration: none;
 	position: relative;
 	font-weight: 500;
+	transition-property: color;
 }
 
 a::before {
@@ -68,7 +69,7 @@ a::before {
 	left: 0;
 	transform-origin: right;
 	transform: scaleX(0);
-	transition-property: transform;
+	transition-property: transform, background-color;
 	transition-timing-function: ease-in-out;
 }
 
