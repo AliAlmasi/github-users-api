@@ -1,0 +1,204 @@
+@font-face {
+	font-family: "Mona";
+	src: url("/Mona-Sans.woff2") format("woff2");
+}
+
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	user-select: text;
+	transition-duration: 0.2s;
+	transition-property: none;
+	user-select: none;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+:root {
+	--black-color: #212529;
+	--white-color: #e9ecef;
+	--gray-color: #adb5bd;
+	--darkgray-color: #495057;
+	--dark-color: #343a40;
+}
+
+*::selection {
+	color: var(--black-color);
+	background-color: var(--gray-color);
+}
+
+body {
+	background-color: transparent;
+	color: var(--white-color);
+	width: 100svw;
+	height: 100svh;
+	font-size: 1.8rem;
+	font-family: "Mona", sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 3.6rem 9.2rem;
+}
+
+input {
+	font-family: "Mona", sans-serif;
+}
+
+a:link,
+a:visited {
+	color: var(--white-color);
+	text-decoration: none;
+	position: relative;
+	font-weight: 500;
+}
+
+a::before {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 1px;
+	background-color: var(--white-color);
+	bottom: 0;
+	left: 0;
+	transform-origin: right;
+	transform: scaleX(0);
+	transition-property: transform;
+	transition-timing-function: ease-in-out;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+a:hover::before {
+	transform-origin: left;
+	transform: scaleX(1);
+}
+
+a:active {
+	color: var(--gray-color);
+}
+
+a:active::before {
+	background-color: var(--gray-color);
+}
+
+.btn {
+	padding: 0.8rem 1.4rem;
+	background-color: var(--black-color);
+	outline: 1px solid var(--darkgray-color);
+	transition-property: background-color, filter, outline;
+	user-select: none;
+	border-radius: 1.8rem;
+	font-weight: 500;
+}
+
+.btn:hover {
+	background-color: var(--dark-color);
+	outline-color: var(--gray-color);
+	cursor: pointer;
+}
+
+.btn:active {
+	filter: brightness(0.6);
+}
+
+#bg {
+	position: fixed;
+	width: 100svw;
+	height: 100svh;
+	z-index: -1;
+	background-color: var(--darkgray-color);
+}
+
+main {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	background-color: #212529c4;
+	border-radius: 2rem;
+	backdrop-filter: blur(3rem);
+}
+
+.title {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	background-color: var(--black-color);
+	padding: 0.8rem 1.2rem;
+	border-radius: 3rem;
+	outline: 1px solid var(--darkgray-color);
+	padding-right: 2.4rem;
+}
+
+.title svg {
+	width: 4.8rem;
+	height: 4.8rem;
+	fill: var(--white-color);
+}
+
+.search-box {
+	display: flex;
+	gap: 1rem;
+	background-color: var(--black-color);
+	padding: 0.8rem;
+	border-radius: 2rem;
+	outline: 1px solid var(--darkgray-color);
+}
+
+#userName-input {
+	font-size: 1.8rem;
+	padding: 0.8rem 1.4rem;
+	outline: 1px solid var(--darkgray-color);
+	border: none;
+	width: 40rem;
+	text-align: center;
+	background-color: var(--black-color);
+	color: var(--white-color);
+	caret-color: transparent;
+	border-radius: 1.8rem;
+	transition-property: background-color, outline;
+}
+
+#userName-input::placeholder {
+	color: var(--white-color);
+}
+
+#userName-input:hover {
+	background-color: var(--dark-color);
+	outline-color: var(--gray-color);
+}
+
+#userName-input:active,
+#userName-input:focus {
+	background-color: var(--dark-color);
+	outline-color: var(--gray-color);
+	caret-color: var(--white-color);
+}
+
+#userName-input:active::placeholder,
+#userName-input:focus::placeholder {
+	color: transparent;
+}
+
+.profile-box {
+	min-width: 100%;
+	min-height: 60%;
+	padding: 0 4.8rem;
+}
+
+.card {
+	width: 100%;
+	height: 100%;
+	outline: 1px solid var(--gray-color);
+	border-radius: 2rem;
+}
