@@ -45,26 +45,25 @@ function requestUserInfo(username) {
 			.catch(function (error) {
 				httpErrorCheck(error);
 				elements.profileBox.style.display = "none";
-				console.log(error);
 			});
 	}
 }
 
 function loadData(data) {
 	const {
+		name,
+		login,
 		avatar_url,
 		html_url,
+		location,
 		bio,
 		company,
 		blog,
-		location,
-		following,
-		followers,
-		login,
-		name,
+		twitter_username,
 		public_repos,
 		public_gists,
-		twitter_username
+		followers,
+		following
 	} = data;
 
 	if (avatar_url) {
@@ -114,7 +113,11 @@ function linkValidCheck(blog) {
 	if (blog) {
 		document.querySelector("#link").style.display = "block";
 		elements.userLink.textContent = `${blog}`;
-		elements.userLink.href = `${blog}`;
+		if (blog.includes("http")) {
+			elements.userLink.href = `${blog}`;
+		} else {
+			elements.userLink.href = `http://${blog}`;
+		}
 	} else {
 		document.querySelector("#link").style.display = "none";
 	}
@@ -132,12 +135,19 @@ function locationValidCheck(location) {
 function companyValidCheck(company) {
 	if (company) {
 		document.querySelector("#companies").style.display = "block";
-		const companyArray = company.split(", ");
-		companyArray.forEach((element) => {
-			elements.companies.innerHTML += `<a class="user-stats user-company" href="https://github.com/${
-				element.split("@")[1]
-			}" target="_blank">${element}</a>&MediumSpace;`;
-		});
+		if (company.includes("@")) {
+			const companyArray = company.trim().replace(/,|, /g, "").split(" ");
+			companyArray.forEach((element) => {
+				elements.companies.innerHTML += `<a class="user-stats user-company" href="https://github.com/${
+					element.split("@")[1]
+				}" target="_blank">${element}</a>&MediumSpace;`;
+			});
+		} else {
+			const companyArray = company.trim().replace(/,|, /g, "").split(" ");
+			companyArray.forEach((element) => {
+				elements.companies.innerHTML += `Company:&MediumSpace;<span class="user-stats user-company">${element}</span>&MediumSpace;`;
+			});
+		}
 	} else {
 		document.querySelector("#companies").style.display = "none";
 	}
@@ -175,10 +185,6 @@ const elements = {
 	userFollowers: document.querySelector(".user-followers"),
 	userFollowings: document.querySelector(".user-followings")
 };
-
-document.addEventListener("DOMContentLoaded", () => {
-	userQueryUpdate();
-});
 
 elements.usernameInput.addEventListener("keyup", function onEvent(e) {
 	if (e.keyCode === 13) {
