@@ -1,5 +1,30 @@
 "use strict";
 
+const defaultPFP =
+	"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgZmlsbD0iI2U5ZWNlZiIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0yMjQsMTI4YTk1Ljc2LDk1Ljc2LDAsMCwxLTMxLjgsNzEuMzdBNzIsNzIsMCwwLDAsMTI4LDE2MGE0MCw0MCwwLDEsMC00MC00MCw0MCw0MCwwLDAsMCw0MCw0MCw3Miw3MiwwLDAsMC02NC4yLDM5LjM3aDBBOTYsOTYsMCwxLDEsMjI0LDEyOFoiIG9wYWNpdHk9IjAuMiI+PC9wYXRoPjxwYXRoIGQ9Ik0xMjgsMjRBMTA0LDEwNCwwLDEsMCwyMzIsMTI4LDEwNC4xMSwxMDQuMTEsMCwwLDAsMTI4LDI0Wk03NC4wOCwxOTcuNWE2NCw2NCwwLDAsMSwxMDcuODQsMCw4Ny44Myw4Ny44MywwLDAsMS0xMDcuODQsMFpNOTYsMTIwYTMyLDMyLDAsMSwxLDMyLDMyQTMyLDMyLDAsMCwxLDk2LDEyMFptOTcuNzYsNjYuNDFhNzkuNjYsNzkuNjYsMCwwLDAtMzYuMDYtMjguNzUsNDgsNDgsMCwxLDAtNTkuNCwwLDc5LjY2LDc5LjY2LDAsMCwwLTM2LjA2LDI4Ljc1LDg4LDg4LDAsMSwxLDEzMS41MiwwWiI+PC9wYXRoPjwvc3ZnPg==";
+
+const elements = {
+	usernameInput: document.querySelector("#userName-input"),
+	enterBtn: document.querySelector("#btn-Search"),
+	profileBox: document.querySelector(".profile-box"),
+	cardname: document.querySelector(".card-name"),
+	cardFullname: document.querySelector(".card-fullname"),
+	cardUsername: document.querySelector(".card-username"),
+	cardImg: document.querySelector(".card-img"),
+	userLocation: document.querySelector(".user-location"),
+	userBio: document.querySelector(".user-bio"),
+	userCompany: document.querySelector(".user-company"),
+	companies: document.querySelector("#companies"),
+	userLink: document.querySelector(".user-link"),
+	userTwitter: document.querySelector(".user-twitter"),
+	userRepos: document.querySelector(".user-repos"),
+	userGists: document.querySelector(".user-gists"),
+	userFollowers: document.querySelector(".user-followers"),
+	userFollowings: document.querySelector(".user-followings"),
+	errorBox: document.querySelector(`.error-box`),
+	errorText: document.querySelector("#error-text")
+};
+
 function checkStatus(response) {
 	if (!response.ok) {
 		const responseError = {
@@ -15,19 +40,21 @@ function checkStatus(response) {
 function httpErrorCheck(error) {
 	switch (error.status) {
 		case 400:
-			console.log("400 Bad Request, try again");
+			elements.errorText.textContent = "400 Bad Request, try again";
 			break;
 		case 403:
-			console.log("403 Forbidden Request, try again");
+			elements.errorText.textContent = "403 Forbidden Request, try again";
 			break;
 		case 404:
-			console.log("404 User Not Found, try again");
+			elements.errorText.textContent = "404 User Not Found, try again";
 			break;
 		case 500:
-			console.log("Internal Server Error, try again");
+			elements.errorText.textContent = "Internal Server Error, try again";
 			break;
 		default:
-			console.log("unhandled");
+			elements.errorText.textContent = "Unhandled error, check the console";
+			console.log(`Unhandled error code: ${error.status}`);
+			console.log(error);
 			break;
 	}
 }
@@ -45,6 +72,7 @@ function requestUserInfo(username) {
 			.catch(function (error) {
 				httpErrorCheck(error);
 				elements.profileBox.style.display = "none";
+				elements.errorBox.style.display = "block";
 			});
 	}
 }
@@ -88,6 +116,7 @@ function loadData(data) {
 	locationValidCheck(location);
 	companyValidCheck(company);
 	twitterValidCheck(twitter_username);
+	elements.errorBox.style.display = "none";
 	elements.profileBox.style.display = "block";
 }
 
@@ -162,29 +191,6 @@ function twitterValidCheck(twitter_username) {
 		document.querySelector("#twitter").style.display = "none";
 	}
 }
-
-const defaultPFP =
-	"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgZmlsbD0iI2U5ZWNlZiIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0yMjQsMTI4YTk1Ljc2LDk1Ljc2LDAsMCwxLTMxLjgsNzEuMzdBNzIsNzIsMCwwLDAsMTI4LDE2MGE0MCw0MCwwLDEsMC00MC00MCw0MCw0MCwwLDAsMCw0MCw0MCw3Miw3MiwwLDAsMC02NC4yLDM5LjM3aDBBOTYsOTYsMCwxLDEsMjI0LDEyOFoiIG9wYWNpdHk9IjAuMiI+PC9wYXRoPjxwYXRoIGQ9Ik0xMjgsMjRBMTA0LDEwNCwwLDEsMCwyMzIsMTI4LDEwNC4xMSwxMDQuMTEsMCwwLDAsMTI4LDI0Wk03NC4wOCwxOTcuNWE2NCw2NCwwLDAsMSwxMDcuODQsMCw4Ny44Myw4Ny44MywwLDAsMS0xMDcuODQsMFpNOTYsMTIwYTMyLDMyLDAsMSwxLDMyLDMyQTMyLDMyLDAsMCwxLDk2LDEyMFptOTcuNzYsNjYuNDFhNzkuNjYsNzkuNjYsMCwwLDAtMzYuMDYtMjguNzUsNDgsNDgsMCwxLDAtNTkuNCwwLDc5LjY2LDc5LjY2LDAsMCwwLTM2LjA2LDI4Ljc1LDg4LDg4LDAsMSwxLDEzMS41MiwwWiI+PC9wYXRoPjwvc3ZnPg==";
-
-const elements = {
-	usernameInput: document.querySelector("#userName-input"),
-	enterBtn: document.querySelector("#btn-Search"),
-	profileBox: document.querySelector(".profile-box"),
-	cardname: document.querySelector(".card-name"),
-	cardFullname: document.querySelector(".card-fullname"),
-	cardUsername: document.querySelector(".card-username"),
-	cardImg: document.querySelector(".card-img"),
-	userLocation: document.querySelector(".user-location"),
-	userBio: document.querySelector(".user-bio"),
-	userCompany: document.querySelector(".user-company"),
-	companies: document.querySelector("#companies"),
-	userLink: document.querySelector(".user-link"),
-	userTwitter: document.querySelector(".user-twitter"),
-	userRepos: document.querySelector(".user-repos"),
-	userGists: document.querySelector(".user-gists"),
-	userFollowers: document.querySelector(".user-followers"),
-	userFollowings: document.querySelector(".user-followings")
-};
 
 elements.usernameInput.addEventListener("keyup", function onEvent(e) {
 	if (e.keyCode === 13) {

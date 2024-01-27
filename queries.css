@@ -1,0 +1,65 @@
+@media (max-width: 69.375em) {
+	body {
+		padding: 2.4rem 3.6rem;
+	}
+}
+
+@media (max-width: 58.75em) {
+	.card {
+		gap: unset;
+		justify-content: space-between;
+		padding: 1.2rem 2.4rem;
+	}
+
+	.card-name {
+		width: 25%;
+		justify-content: space-between;
+	}
+
+	.card-img {
+		width: 12rem;
+		height: 12rem;
+	}
+
+	.card-user_stats {
+		width: 30%;
+	}
+
+	.card-user_info {
+		width: 40%;
+	}
+}
+
+@media (max-width: 54.375em) {
+	main {
+		justify-content: space-around;
+	}
+}
+
+@media (max-width: 38.125em) {
+	main {
+		display: none;
+	}
+
+	.mobile {
+		display: flex;
+	}
+
+	#bg {
+		display: none;
+	}
+}
+
+@media (max-height: 26.875em) {
+	main {
+		display: none;
+	}
+
+	.mobile {
+		display: flex;
+	}
+
+	#bg {
+		display: none;
+	}
+}
